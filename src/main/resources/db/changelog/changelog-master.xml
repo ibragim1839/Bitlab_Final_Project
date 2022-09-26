@@ -1,0 +1,262 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet id="0.0.1_create_users_and_roles_tables" author="Ibragim">
+        <sqlFile path="/changes/0.0.1_create_users_and_roles_tables.sql"
+                 dbms="postgresql"
+                 encoding="utf8"
+                 endDelimiter=";"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="0.0.2_generate_users_and_roles_joint_table" author="Ibragim">
+        <sqlFile path="/changes/0.0.2_generate_users_and_roles_joint_table.sql"
+                 dbms="postgresql"
+                 encoding="utf8"
+                 endDelimiter=";"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="0.0.3_insert_roles" author="Ibragim">
+        <sqlFile path="/changes/0.0.3_insert_roles.sql"
+                 dbms="postgresql"
+                 encoding="utf8"
+                 endDelimiter=";"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+
+    <changeSet id="0.0.4_insert_default_user" author="Ibragim">
+        <sqlFile path="/changes/0.0.4_insert_default_user.sql"
+                 dbms="postgresql"
+                 encoding="utf8"
+                 endDelimiter=";"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="0.0.5_insert_default_user_roles" author="Ibragim">
+        <sqlFile path="/changes/0.0.5_insert_default_user_roles.sql"
+                 dbms="postgresql"
+                 encoding="utf8"
+                 endDelimiter=";"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="0.0.6_creating_animal_table" author="Ibragim">
+        <sqlFile path="/changes/0.0.6_creating_animal_table.sql"
+                 dbms="postgresql"
+                 encoding="utf8"
+                 endDelimiter=";"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="0.0.7_creating_breed_table_1" author="Ibragim">
+        <sqlFile path="/changes/0.0.7_creating_breed_table.sql"
+                 dbms="postgresql"
+                 encoding="utf8"
+                 endDelimiter=";"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+
+    <changeSet id="0.0.8_creating_owners_doctors_tables" author="Ibragim">
+        <sqlFile path="/changes/0.0.8_creating_owners_doctors_tables.sql"
+                 dbms="postgresql"
+                 encoding="utf8"
+                 endDelimiter=";"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="0.0.9_inserting_default_user_owner_doctor" author="Ibragim">
+        <sqlFile path="/changes/0.0.9_inserting_default_user_owner_doctor.sql"
+                 dbms="postgresql"
+                 encoding="utf8"
+                 endDelimiter=";"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="0.0.10_creating_pets_table" author="Ibragim">
+        <sqlFile path="/changes/0.0.10_creating_pets_table.sql"
+                 dbms="postgresql"
+                 encoding="utf8"
+                 endDelimiter=";"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="0.1.1_inserting_cat_animal_breed_pet" author="Ibragim">
+        <sqlFile path="/changes/0.1.1_inserting_cat_animal_breed_pet.sql"
+                 dbms="postgresql"
+                 encoding="utf8"
+                 endDelimiter=";"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="0.1.2_creating_cards_table" author="Ibragim">
+        <sqlFile path="/changes/0.1.2_creating_cards_table.sql"
+                 dbms="postgresql"
+                 encoding="utf8"
+                 endDelimiter=";"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+
+    <changeSet id="0.1.3_creating_comments_table" author="Ibragim">
+        <sqlFile path="/changes/0.1.3_creating_comments_table.sql"
+                 dbms="postgresql"
+                 encoding="utf8"
+                 endDelimiter=";"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="0.1.4_fixing_cards_table" author="Ibragim">
+        <sqlFile path="/changes/0.1.4_fixing_cards_table.sql"
+                 dbms="postgresql"
+                 encoding="utf8"
+                 endDelimiter=";"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="0.1.5_fixing_cards_table_2" author="Ibragim">
+        <sqlFile path="/changes/0.1.5_fixing_cards_table_2.sql"
+                 dbms="postgresql"
+                 encoding="utf8"
+                 endDelimiter=";"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="0.1.6_fixing_cards_table_3" author="Ibragim">
+        <sqlFile path="/changes/0.1.6_fixing_cards_table_3.sql"
+                 dbms="postgresql"
+                 encoding="utf8"
+                 endDelimiter=";"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="0.1.7_clearing_tables" author="Ibragim">
+        <sqlFile path="/changes/0.1.7_clearing_tables.sql"
+                 dbms="postgresql"
+                 encoding="utf8"
+                 endDelimiter=";"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="0.1.8_inserting_default_users" author="Ibragim">
+        <sqlFile path="/changes/0.1.8_inserting_default_users.sql"
+                 dbms="postgresql"
+                 encoding="utf8"
+                 endDelimiter=";"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="0.1.9_inserting_default_roles_2" author="Ibragim">
+        <sqlFile path="/changes/0.1.9_inserting_default_roles_2.sql"
+                 dbms="postgresql"
+                 encoding="utf8"
+                 endDelimiter=";"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="0.2.0_inserting_roles_users_connection" author="Ibragim">
+        <sqlFile path="/changes/0.2.0_inserting_roles_users_connection.sql"
+                 dbms="postgresql"
+                 encoding="utf8"
+                 endDelimiter=";"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="0.2.1_inserting_default_animals" author="Ibragim">
+        <sqlFile path="/changes/0.2.1_inserting_default_animals.sql"
+                 dbms="postgresql"
+                 encoding="utf8"
+                 endDelimiter=";"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="0.2.2_inserting_default_breeds" author="Ibragim">
+        <sqlFile path="/changes/0.2.2_inserting_default_breeds.sql"
+                 dbms="postgresql"
+                 encoding="utf8"
+                 endDelimiter=";"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="0.2.3_inserting_default_pets" author="Ibragim">
+        <sqlFile path="/changes/0.2.3_inserting_default_pets.sql"
+                 dbms="postgresql"
+                 encoding="utf8"
+                 endDelimiter=";"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="0.2.4_inserting_more_default_users" author="Ibragim">
+        <sqlFile path="/changes/0.2.4_inserting_more_default_users.sql"
+                 dbms="postgresql"
+                 encoding="utf8"
+                 endDelimiter=";"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+
+    <changeSet id="0.2.5_inserting_default_users_details" author="Ibragim">
+        <sqlFile path="/changes/0.2.5_inserting_default_users_details.sql"
+                 dbms="postgresql"
+                 encoding="utf8"
+                 endDelimiter=";"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+
+
+</databaseChangeLog>

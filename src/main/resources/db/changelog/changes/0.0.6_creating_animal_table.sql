@@ -1,0 +1,1 @@
+create table if not exists animals(id serial primary key not null, name varchar(255) not null , specifications text);

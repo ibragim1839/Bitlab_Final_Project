@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Animals</title>
+    <script src="/js/bootstrap.js"></script>
+</head>
+
+<body class="pb-5"  style="background-color: rgba(229, 229, 229)">
+
+<div th:insert="/elements/adminNavbar.html"></div>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-12">
+            <button style="background-color: rgba(67, 97, 238);" type="button" class="btn text-light mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <span>Добавить новое животное</span>
+            </button>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-12">
+            <div style="background-color: white; padding: 25px 20px 40px; border-radius: 10px">
+                <table class="table table-hover">
+                    <thead>
+                    <th>ID</th>
+                    <th>NAME</th>
+                    <th>SPECIFICATIONS</th>
+                    <th>DETAILS</th>
+                    </thead>
+                    <tbody>
+                        <tr th:each="animal:${animals}">
+                            <td th:text="${animal.id}"></td>
+                            <td th:text="${animal.name}"></td>
+                            <td th:text="${animal.specifications}"></td>
+
+                            <td>
+                                <div style="display: flex">
+                                    <button type="button" class="btn " data-bs-toggle="modal"
+                                            th:attr="data-bs-target='#exampleModal'+${animal.id}"
+                                            style="background-color: rgba(67, 97, 238);">
+                                        ✍
+                                    </button>
+                                    <form th:action="@{'/delete-animal'}" method="post" class="ms-2">
+                                        <input type="hidden" th:value="${animal.id}" name="animal_id">
+                                        <button class="btn-danger btn" type="submit"><i class="fa-solid fa-trash-can"></i></button>
+                                    </form>
+                                </div>
+
+                                <div class="modal fade" th:id="'exampleModal'+${animal.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog text-dark">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Изменение животного</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <form method="post" th:action="@{'/change-animal'}">
+                                                <div class="modal-body">
+                                                    <label for="input1">Наименование</label>
+                                                    <input th:value="${animal.name}" id="input1" class="form-control mt-1"
+                                                           name="animal_name" type="text">
+
+                                                    <label for="input2" class="mt-2">Спецификации</label>
+                                                    <textarea id="input2" class="form-control mt-1 mb-2"
+                                                              name="animal_specifications"
+                                                              th:text="${animal.specifications}"></textarea>
+                                                    <input type="hidden" th:value="${animal.id}" name="animal_id">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                                    <button type="submit" class="btn-success btn">Сохранить</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" th:id="'exampleModal'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog text-dark">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1">Добавление животного</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" th:action="@{'/add-new-animal'}">
+                <div class="modal-body">
+                    <label for="input3">Наименование</label>
+                    <input id="input3" class="form-control mt-1"
+                           name="animal_name" type="text">
+
+                    <label for="input4" class="mt-2">Спецификации</label>
+                    <textarea id="input4" class="form-control mt-1 mb-2"
+                              name="animal_specifications"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn-success btn">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

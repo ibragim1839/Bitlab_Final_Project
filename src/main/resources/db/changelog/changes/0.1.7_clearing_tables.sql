@@ -1,0 +1,10 @@
+delete from cards;
+delete from comments;
+delete from pets;
+delete from owners;
+delete from doctors;
+delete from users_roles;
+delete from roles;
+delete from users;
+delete from breeds;
+delete from animals;

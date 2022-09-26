@@ -1,0 +1,10 @@
+create table if not exists pets(id serial primary key not null,
+    name varchar(255) not null ,
+    description text,
+    owner_id int,
+    doctor_id int,
+    breed_id int not null ,
+    pic_url varchar(255),
+    constraint fk_pet_owner foreign key (owner_id) references owners(id),
+    constraint fk_pet_doctor foreign key (doctor_id) references doctors(id),
+    constraint fk_pet_breed foreign key (breed_id) references breeds(id));

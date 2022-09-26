@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel</title>
+</head>
+<body class="pb-5" style="background-color: rgba(229, 229, 229)">
+<div th:insert="/elements/adminNavbar.html"></div>
+<div class="container">
+
+
+    <div class="row mt-3">
+        <div class="col-12">
+            <div class="mx-auto"><h1 class="text-center">Добро пожаловать в админ панель!</h1></div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <a th:href="@{'/manage-users-page'}" style="text-decoration: none">
+                <div class="card" style="width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title text-dark">Управление пользователями</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Назначение ролей, владельцев, просмотр пользователей сервиса и персонала</h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <a th:href="@{'/manage-pets-page'}" style="text-decoration: none">
+                <div class="card" style="width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title text-dark">Управление питомцами</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Просмотр и редактирование информации о питомцах</h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <a th:href="@{'/manage-animals-page'}" style="text-decoration: none">
+                <div class="card" style="width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title text-dark">Управление общей базой животных</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Добавление новых животных в общую базу данных</h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <a th:href="@{'/manage-breeds-page'}" style="text-decoration: none">
+                <div class="card" style="width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title text-dark">Управление породами животных</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Создание, удаление, редактирование пород животных</h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

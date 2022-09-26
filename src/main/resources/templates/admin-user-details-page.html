@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>User Details</title>
+</head>
+<body class="pb-5" style="background-color: rgba(229, 229, 229)">
+    <div th:insert="/elements/adminNavbar.html"></div>
+
+    <div class="container">
+        <div style="background-color: white; padding: 25px 20px 40px; border-radius: 10px" class="mt-4">
+            <div class="row">
+                <div class="col-6">
+                    <div style="width: 100%">
+                        <label for="input2"><h4>Имя:</h4></label>
+                        <input class="form-control" id="input2" type="text" readonly th:value="${user.fullName}">
+                        <label  class="mt-3" for="input3"><h4>Email:</h4></label>
+                        <input class="form-control" id="input3" type="text" readonly th:value="${user.email}">
+                        <div class="row mt-3">
+                            <div class="col-12 mb-2" style="display: flex; align-items: inherit">
+                                <h4><span>Роли: </span></h4>
+                                <button type="button" class="btn btn-primary col-4 ms-3"
+                                        data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                        style="height: 35px; width: 45px; font-size: small">✍</button>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-12" style="display: flex; justify-content:start">
+                                <form th:each="role:${user.roles}" th:action="@{'/delete-role-from-user'}" method="post">
+                                    <input type="hidden" th:value="${role.id}" name="role_id">
+                                    <input type="hidden" th:value="${user.id}" name="user_id">
+                                    <button style="background-color: rgb(252, 163, 17);margin-right: 10px ; border: none; color: white"
+                                            class="btn-sm"><span th:text="${role.name}"></span><i
+                                            class="fa-solid fa-xmark" style="margin-left: 8px"></i></button>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <img th:src="${'/view-user-picture/'}+${user.picUrl}" style="height: 300px">
+                </div>
+            </div>
+
+
+            <div class="row mt-4">
+                <div class="col-6" th:if="${owner}!=null">
+                    <h5>Питомцы пользователя: </h5>
+                    <table class="table table-striped" style="border-color: rgb(20, 33, 61)">
+                        <thead style="background-color: rgb(20, 33, 61)" class="text-light">
+                        <th>ID</th>
+                        <th>Животное</th>
+                        <th>Порода</th>
+                        <th>Имя</th>
+                        <th>Отвязать</th>
+                        </thead>
+                        <tbody>
+                        <tr th:each="pet:${petsOfOwner}">
+                            <td th:text="${pet.id}"></td>
+                            <td th:text="${pet.breed.animal.name}"></td>
+                            <td th:text="${pet.breed.name}"></td>
+                            <td th:text="${pet.name}"></td>
+                            <td>
+                                <form th:action="@{'/remove-pet-from-owner'}" method="post">
+                                    <input type="hidden" name="userId" th:value="${user.id}">
+                                    <input type="hidden" name="petId" th:value="${pet.id}">
+                                    <button class="btn-danger btn" type="submit"><i class="fa-solid fa-trash-can"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <p><span>Номер телефона: </span><span th:text="${owner.phoneNumber}"></span></p>
+                    <p class="mt-3"><span>Адресс: </span><span th:text="${owner.address}"></span></p>
+                    <button type="button" class="btn btn-success w-100 mt-2" data-bs-toggle="modal"
+                            data-bs-target="#changeOwnerModal" style="height: 45px; width: 45px;">Изменить ✍</button>
+
+                    <div class="modal fade text-dark" id="changeOwnerModal" tabindex="-1" aria-labelledby="changeOwnerModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="changeOwnerModalLabel1">Введите изменения</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+
+                                <form method="post" th:action="@{'/change-owner-details'}">
+                                    <div class="modal-body">
+                                        <label class="mt-2 mb-2" for="input4">Номер телефона</label>
+                                        <input name="owner_phoneNumber" class="form-control" type="number" id="input4" th:value="${owner.phoneNumber}">
+
+                                        <label class="mt-2 mb-2" for="input5">Адрес</label>
+                                        <input name="owner_address" class="form-control" type="text" id="input5" th:value="${owner.address}">
+
+                                        <input type="hidden" th:value="${owner.id}" name="owner_id">
+                                        <input type="hidden" th:value="${user.id}" name="user_id">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6" th:if="${doctor}!=null">
+                    <h5>Пациенты пользователя: </h5>
+                    <table class="table table-striped" style="border-color: rgb(20, 33, 61)">
+                        <thead style="background-color: rgb(20, 33, 61)" class="text-light">
+                        <th>ID</th>
+                        <th>Животное</th>
+                        <th>Порода</th>
+                        <th>Имя</th>
+                        <th>Отвязать </th>
+                        </thead>
+                        <tbody>
+                        <tr th:each="pet:${petsOfDoctor}">
+                            <td th:text="${pet.id}"></td>
+                            <td th:text="${pet.breed.animal.name}"></td>
+                            <td th:text="${pet.breed.name}"></td>
+                            <td th:text="${pet.name}"></td>
+                            <td>
+                                <form th:action="@{'/remove-pet-from-doctor'}" method="post">
+                                    <input type="hidden" name="userId" th:value="${user.id}">
+                                    <input type="hidden" name="petId" th:value="${pet.id}">
+                                    <button class="btn-danger btn" type="submit"><i class="fa-solid fa-trash-can"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <p><span>Номер телефона: </span><span th:text="${doctor.phoneNumber}"></span></p>
+                    <p class="mt-3"><span>Адресс: </span><span th:text="${doctor.address}"></span></p>
+                    <p class="mt-3"><span>Описание: </span><span th:text="${doctor.description}"></span></p>
+
+                    <button type="button" class="btn btn-success w-100 mt-2" data-bs-toggle="modal"
+                            data-bs-target="#changeDoctorModal" style="height: 45px; width: 45px;">Изменить ✍</button>
+
+                    <div class="modal fade text-dark" id="changeDoctorModal" tabindex="-1" aria-labelledby="changeDoctorModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="changeDoctorModalLabel1">Введите изменения</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+
+                                <form method="post" th:action="@{'/change-doctor-details'}">
+                                    <div class="modal-body">
+                                        <label class="mt-2 mb-2" for="input7">Номер телефона</label>
+                                        <input name="doctor_phoneNumber" class="form-control" type="number" id="input7" th:value="${doctor.phoneNumber}">
+
+                                        <label class="mt-2 mb-2" for="input8">Адрес</label>
+                                        <input name="doctor_address" class="form-control" type="text" id="input8" th:value="${doctor.address}">
+
+                                        <label class="mt-2 mb-2" for="input6">Описание(опыт работы, спецификация...)</label>
+                                        <textarea name="doctor_description" class="form-control" type="text" id="input6" th:text="${doctor.description}"></textarea>
+
+                                        <input type="hidden" th:value="${doctor.id}" name="doctor_id">
+                                        <input type="hidden" th:value="${user.id}" name="user_id">
+
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+
+
+<div class="modal fade text-dark" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1">Окно добавления ролей</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" th:action="@{'/add-role-to-user'}">
+                <div class="modal-body">
+                    <label for="input1">Выберите роль</label>
+                    <select id="input1" class="form-select" name="roleId">
+                        <option th:each="role:${unChosenRoles}" th:text="${role.name}" th:value="${role.id}"></option>
+                    </select>
+                    <input type="hidden" th:value="${user.id}" name="userId">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+</html>

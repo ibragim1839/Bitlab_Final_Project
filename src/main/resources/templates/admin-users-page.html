@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <head>
+        <meta charset="UTF-8">
+        <title>Manage Users</title>
+    </head>
+
+    <body class="pb-5" style="background-color: rgba(229, 229, 229)">
+    <div th:insert="/elements/adminNavbar.html"></div>
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-12">
+                    <div style="background-color: white; padding: 25px 20px 40px; border-radius: 10px">
+                        <table class="table table-hover">
+                            <thead>
+                                <th>ID</th>
+                                <th>Имя</th>
+                                <th>e-mail</th>
+                                <th>Роли</th>
+                                <th>Детали</th>
+                            </thead>
+                            <tbody>
+                                <tr th:each="user:${userList}">
+                                    <td th:text="${user.id}">
+                                    <td th:text="${user.fullName}">
+                                    <td th:text="${user.email}">
+                                    <td><span th:each="role:${user.roles}" th:text="${role.name}+' | '"></span></td>
+                                    <td>
+                                        <a th:href="@{'/admin-user-details/'+${user.id}}">
+                                            <button style="background-color: rgba(67, 97, 238);" class="btn text-light">DETAILS</button>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

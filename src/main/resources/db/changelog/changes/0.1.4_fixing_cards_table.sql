@@ -1,0 +1,1 @@
+alter table cards alter column post_date set default now();

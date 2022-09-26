@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body onload="loadPatients()" class="pb-5" style="background-color: rgba(229, 229, 229)">
+<div th:insert="/elements/navbar.html"></div>
+<div class="container">
+    <div class="row" style="display: flex;  justify-content: space-between">
+        <div class="col-10 mx-auto">
+            <div style="padding: 20px; border-radius: 10px; background-color: white; margin-top: 60px">
+                <table class="table table-hover"
+                       style="border-radius: 10px;">
+                    <thead style="background-color: rgba(229, 229, 229)">
+                    <th>ID</th>
+                    <th>Имя</th>
+                    <th>Порода</th>
+                    <th>Владелец</th>
+                    <th>Детали</th>
+                    </thead>
+                    <tbody id="pets">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    function loadPatients(){
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function (){
+            const result = this.responseText;
+            var newList = JSON.parse(result);
+            var html = "";
+            for(var i=0; i<newList.length; i++){
+                html+="<tr>"
+                html+="<td>"+newList[i].id+"</td>"
+                html+="<td>"+newList[i].name+"</td>"
+                html+="<td>"+newList[i].breed.name+" | "+newList[i].breed.animal.name+"</td>"
+                if (newList[i].owner!=null){
+                    html+="<td>"+newList[i].owner.user.fullName+"</td>"
+                }
+                else{
+                    html+="<td>---</td>"
+                }
+                html+="<td><a class='btn' href='/doctor-patients/" + newList[i].id + "'" +
+                    " style='text-decoration: none; color: white;background-color: rgba(255, 102, 0)'>Детали</a></td>"
+
+                html+="</tr>"
+            }
+            document.getElementById("pets").innerHTML=html;
+        }
+        xhttp.open("GET","http://localhost:8000/patients/user");
+        xhttp.send();
+    }
+</script>
+
+</html>

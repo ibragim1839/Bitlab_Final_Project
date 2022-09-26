@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Start</title>
+    <link type="text/css" href="/css/bootstrap.css" rel="stylesheet">
+    <script src="/js/bootstrap.js"></script>
+    <script src="https://kit.fontawesome.com/3fcd2ffa36.js" crossorigin="anonymous"></script>
+</head>
+<body style="background-color: rgba(229, 229, 229)">
+    <div class="container">
+        <div class="row" style="margin-top: 60px">
+            <div class="col-12" style="display: flex; justify-content: center; align-items: center">
+                <img th:src="${'/view-logo/'}" alt="logo" style="height: 400px">
+            </div>
+            <h4 class="text-center mt-4"><a th:href="@{'/enter'}">Начать</a></h4>
+        </div>
+    </div>
+</body>
+</html>

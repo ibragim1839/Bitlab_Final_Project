@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <head>
+        <meta charset="UTF-8">
+        <title>Card</title>
+    </head>
+    <body class="pb-5" style="background-color: rgba(229, 229, 229)">
+    <div th:insert="/elements/navbar.html"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h4>Карточка питомца <span th:text="${card.pet.id}"></span></h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <h6>Заголовок</h6>
+                    <p th:text="${card.header}"></p>
+                    <h6>Описание</h6>
+                    <p th:text="${card.description}"></p>
+                    <hr>
+                    <span><h6>Питомец: </h6><a th:text="" th:href="@{'/'}}"></a></span>
+                    <hr>
+                    <span><h6>Порода: </h6><a></a></span>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

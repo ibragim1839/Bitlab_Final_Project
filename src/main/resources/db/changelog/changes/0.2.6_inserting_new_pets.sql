@@ -1,0 +1,1 @@
+update pets set name='Кирпичик' where id=10;
