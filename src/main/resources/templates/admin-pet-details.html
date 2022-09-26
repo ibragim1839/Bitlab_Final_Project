@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <head>
+        <meta charset="UTF-8">
+        <title>Pet Details</title>
+        <script src="/js/bootstrap.js"></script>
+        <script src="https://kit.fontawesome.com/3fcd2ffa36.js" crossorigin="anonymous"></script>
+    </head>
+    <body class="pb-5" style="background-color: rgba(229, 229, 229)">
+        <div th:insert="/elements/adminNavbar.html"></div>
+        <div class="container">
+
+            <div class="row mt-4">
+                <div class="col-12 text-center">
+                    <div th:switch="${pet.owner}">
+                        <h3 th:case="null" class="text-danger">*У питомца нет хозяина*</h3>
+                        <h3 th:case="*" class="text-success">*У питомца есть хозяин*</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4" style="background-color: white; border-radius: 10px">
+                <div class="col-12 mt-3">
+                    <div style="display: flex; justify-content: center">
+                        <div style="padding: 15px 50px 50px 30px;">
+                            <h5><span>Имя питомца: </span><span th:text="${pet.name}"></span></h5>
+                            <p><span>Описание питомца: </span><span th:text="${pet.description}"></span></p>
+                            <div>
+                                <h5><span>Порода: </span><span th:text="${pet.breed.name}"></span></h5>
+                                <p><span>Описание породы: </span><span th:text="${pet.breed.specifications}"></span></p>
+                            </div>
+                            <div>
+                                <h5><span>Животное: </span><span th:text="${pet.breed.animal.name}"></span></h5>
+                                <p><span>Описание животного: </span><span th:text="${pet.breed.animal.specifications}"></span></p>
+                            </div>
+                            <div style="display: flex; flex-direction: row">
+                                <button style="height: 40px" type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#changePetInformationModal">
+                                    ✍ изменить информацию</button>
+                                <form method="post" th:action="@{'/delete-pet'}" >
+                                    <input type="hidden" name="pet_id" th:value="${pet.id}">
+                                    <button class="btn btn-danger mt-2 ms-2" style="height: 40px" type="submit">удалить питомца</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div style="display: flex; flex-direction: row; margin-right: 30px; margin-top: 15px">
+                            <img th:src="${'/view-pet-picture/'}+${pet.picUrl}" style="height: 300px">
+                            <button data-bs-toggle="modal" data-bs-target="#changePetPictureModal" type="button"
+                                    class="btn btn-success" style="height: 300px;
+                            border-bottom-left-radius: 0; border-top-left-radius: 0">✍</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="row mt-4" style="background-color: white; padding: 30px">
+                <div class="col-6">
+                    <div th:switch="${pet.owner}">
+                        <div th:case="null">
+                            <h5>Владелец отсутствует:</h5>
+                            <hr>
+                            <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#setOwnerToPetModal">
+                                Назначить владельца
+                            </button>
+                        </div>
+                        <div th:case="*">
+                            <h5>Информация о владельце:</h5>
+                            <hr>
+                            <p><span>Имя: </span><span th:text="${pet.owner.user.fullName}"></span></p>
+                            <p><span>Адресс: </span><span th:text="${pet.owner.address}"></span></p>
+                            <p><span>Номер телефона: </span><span th:text="${pet.owner.phoneNumber}"></span></p>
+                            <button type="button" class="btn btn-danger mt-2" data-bs-toggle="modal" data-bs-target="#deleteOwnerFromPetModal">
+                                Удалить владельца
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div th:switch="${pet.doctor}">
+                        <div th:case="null">
+                            <h5>Доктор не назначен:</h5>
+                            <hr>
+                            <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#setDoctorToPetModal">
+                                Назначить доктора
+                            </button>
+                        </div>
+
+                        <div th:case="*">
+                            <h5>Информация о докторе:</h5>
+                            <hr>
+                            <p><span>Имя: </span><span th:text="${pet.doctor.user.fullName}"></span></p>
+                            <p><span>Адресс: </span><span th:text="${pet.doctor.address}"></span></p>
+                            <p><span>Номер телефона: </span><span th:text="${pet.doctor.phoneNumber}"></span></p>
+                            <p><span>Описание: </span><span th:text="${pet.doctor.description}"></span></p>
+                            <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#setDoctorToPetModal">
+                                Переназначить доктора
+                            </button>
+                        </div>
+
+
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <div class="modal fade" id="setDoctorToPetModal" tabindex="-1" aria-labelledby="setDoctorToPetModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post" th:action="@{'/set-doctor-to-pet'}">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="setDoctorToPetModalLabel">Выберите доктора для назначения</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="doctorSelect">Выберите доктора</label>
+                        <input type="hidden" name="pet_id" th:value="${pet.id}">
+                        <select name="doctor_id" id="doctorSelect" class="form-select">
+                            <option th:each="doctor:${doctors}" th:text="${doctor.id}+' | '+${doctor.user.fullName}"
+                                    th:value="${doctor.id}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteOwnerFromPetModal" tabindex="-1" aria-labelledby="deleteOwnerFromPetModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post" th:action="@{'/delete-owner-from-pet'}">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteOwnerFromPetModalLabel">Подтвердите свои действия</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="pet_id" th:value="${pet.id}">
+                        Этим действием вы полностью отвяжете владельца от пользователя. Уверены ли вы в своем действии?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Нет</button>
+                        <button type="submit" class="btn btn-primary">Да</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="setOwnerToPetModal" tabindex="-1" aria-labelledby="setOwnerToPetModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post" th:action="@{'/set-owner-to-pet'}">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="setOwnerToPetModalLabel">Выберите владельца для назначения</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="doctorSelect">Выберите владельца</label>
+                        <input type="hidden" name="pet_id" th:value="${pet.id}">
+                        <select name="owner_id" id="ownerSelect" class="form-select">
+                            <option th:each="owner:${owners}" th:text="${owner.id}+' | '+${owner.user.fullName}"
+                                    th:value="${owner.id}">
+                            </option>
+                        </select>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" th:id="'changePetInformationModal'" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+        <div class="modal-dialog text-dark">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel1">Внесите изменения</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="post" th:action="@{'/change-pet-information'}" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <label for="input4">Имя питомца</label>
+                        <input id="input4" class="form-control mt-1"
+                               name="pet_name" type="text" th:value="${pet.name}">
+
+                        <label for="input5" class="mt-2">Описание питомца</label>
+                        <textarea id="input5" class="form-control mt-1 mb-2"
+                                  name="pet_description" th:text="${pet.description}"></textarea>
+
+                        <label for="input6" class="mt-2">Порода + Животное</label>
+                        <select id="input6" class="form-select" name="pet_breed_animal">
+                            <option th:each="breed:${breeds}" th:text="${breed.name} + ' | ' + ${breed.animal.name}" th:value="${breed.id}" th:selected="${pet.breed.id}==${breed.id}"></option>
+                        </select>
+
+                        <input type="hidden" name="pet_id" th:value="${pet.id}">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn-success btn">Сохранить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" th:id="'changePetPictureModal'" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+        <div class="modal-dialog text-dark">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel2">Изменить фотографию</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="post" th:action="@{'/change-pet-picture'}" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <label for="input7" class="mt-2">Фотография</label>
+                        <input type="file" id="input7" class="form-control mt-1" name="pet_picture">
+
+                        <input type="hidden" name="pet_id" th:value="${pet.id}">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn-success btn">Сохранить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</html>

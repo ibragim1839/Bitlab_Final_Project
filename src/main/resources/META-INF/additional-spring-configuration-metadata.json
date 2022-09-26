@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "UploadUrl",
+      "type": "java.lang.String",
+      "description": "Description for UploadUrl."
+  }
+] }

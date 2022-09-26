@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Pets Page</title>
+</head>
+<body class="pb-5" style="background-color: rgba(229, 229, 229)">
+<div th:insert="/elements/adminNavbar.html"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <button style="background-color: rgba(67, 97, 238);" type="button" class="btn text-light mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <span>Добавить нового питомца</span>
+            </button>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-12">
+            <div style="background-color: white; padding: 25px 20px 40px; border-radius: 10px">
+                <table class="table table-hover">
+                    <thead>
+                        <th>ID</th>
+                        <th>ИМЯ</th>
+                        <th>ОПИСАНИЕ</th>
+                        <th>ПОРОДА</th>
+                        <th>ЖИВОТНОЕ</th>
+                        <th>ХОЗЯИН</th>
+                        <th>ДОКТОР</th>
+                        <th>ДЕТАЛИ</th>
+                    </thead>
+                    <tbody>
+                        <tr th:each="pet:${pets}">
+                            <td th:text="${pet.id}"></td>
+                            <td th:text="${pet.name}"></td>
+                            <td th:text="${pet.description}"></td>
+                            <td th:text="${pet.breed.name}"></td>
+                            <td th:text="${pet.breed.animal.name}"></td>
+                            <td th:switch="${pet.owner}">
+                                <span th:case="null">---</span>
+                                <span th:case="*" th:text="${pet.owner.user.fullName}"></span>
+                            </td>
+                            <td th:switch="${pet.doctor}">
+                                <span th:case="null">---</span>
+                                <span th:case="*" th:text="${pet.doctor.user.fullName}"></span>
+                            </td>
+                            <td class="text-light">
+                                <a th:href="@{'/admin-pet-details/'+${pet.id}}">
+                                    <button style="background-color: rgba(67, 97, 238);" class="btn text-light">Детали</button>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" th:id="'exampleModal'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog text-dark">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1">Добавление породы</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" th:action="@{'/add-new-pet'}" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <label for="input4">Имя питомца</label>
+                    <input id="input4" class="form-control mt-1"
+                           name="pet_name" type="text">
+
+                    <label for="input5" class="mt-2">Описание питомца</label>
+                    <textarea id="input5" class="form-control mt-1 mb-2"
+                              name="pet_description"></textarea>
+
+                    <label for="input6" class="mt-2">Порода + Животное</label>
+                    <select id="input6" class="form-select" name="pet_breed_animal">
+                        <option th:each="breed:${breeds}" th:text="${breed.name} + ' | ' + ${breed.animal.name}" th:value="${breed.id}"></option>
+                    </select>
+
+                    <label for="input7" class="mt-2">Фотография</label>
+                    <input type="file" id="input7" class="form-control mt-1" name="pet_picture">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn-success btn">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
